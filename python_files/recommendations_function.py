@@ -21,7 +21,7 @@ movies = pd.read_csv("data/movies.csv")
 # In[3]:
 
 
-links = pd.read_csv("data/links.csv")
+links = pd.read_csv("data/links.csv", dtype={'imdbId': object})
 
 
 # In[4]:
