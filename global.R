@@ -1,4 +1,4 @@
-# Przydatne biblioteki
+# Potrzebne biblioteki
 
 library(shiny) 
 library(shinyWidgets) 
@@ -24,6 +24,7 @@ library(shinyWidgets)
 library(shinydashboard) 
 library(shinyBS) 
 library(reticulate)
+library(httr)
 
 # Biblioteki pythonowe, które są potrzebne, aby działał plik .py
 
@@ -40,14 +41,13 @@ library(reticulate)
 source_python('python_files/recommendations_function.py')
 
 
-# Globalne zmienne do filtrów
+# Przygotowanie globalnej zmiennej do filtru filmów
 
 data_1 <- data["movieID"]
 data_2 <- movies[c('movieID', 'title')]
 data_1 <- merge(data_1, data_2, by = "movieID", all.x = TRUE)
 
 MOVIES_NAME <- data_1['title']
-#MOVIES_NAME$title <- substr(MOVIES_NAME$title, 1, nchar(MOVIES_NAME$title)-6)
 setorder(MOVIES_NAME)
 colnames(MOVIES_NAME) <- 'Title'
 MOVIES_NAME <<- MOVIES_NAME

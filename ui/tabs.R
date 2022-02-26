@@ -10,7 +10,8 @@ TABS <<- tabPanel("Ranking",
                   
                   hidden(progressBar(id = 'progres', value = 0, size = "sm", status = "danger", striped = TRUE, 
                                      title = "", range_value = NULL, unit_mark = "%", display_pct = TRUE)),
-
+                  
+                  bsModal("modal_plot", "Details", trigger = NULL, size = "large"),
+                  
                   DTOutput("table")
-                                        
 ) 

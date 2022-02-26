@@ -100,7 +100,7 @@ data = data.loc[:,user_votes[user_votes > 10].index]
 
 
 csr_data = csr_matrix(data.values)
-data.reset_index(inplace=True)
+data.reset_index(inplace = True)
 
 
 # In[17]:
@@ -112,7 +112,7 @@ csr_data
 # In[18]:
 
 
-knn = NearestNeighbors(metric='euclidean', algorithm='auto', n_neighbors=20, n_jobs=-1)
+knn = NearestNeighbors(metric = 'cosine', algorithm = 'auto', n_neighbors = 11, n_jobs = -1)
 
 
 # In[19]:
