@@ -15,7 +15,7 @@ server <- function(input, output, session){
    
    # Wybranie filmu - funkcja z pliku pythonowego
    df <- create_recommendations(input$movie_name)
-   #df <- df[rev(rownames(df)),]
+   df <- df[rev(rownames(df)),]
    df$Position <- 1:10
    setDT(df)
    
