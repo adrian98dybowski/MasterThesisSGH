@@ -27,3 +27,53 @@ output_rapidapi
 
 df <- merge(df, output_rapidapi, by = "imdbID", all.x = TRUE)
 setorder(df, Position)
+
+
+# DRUGIE API
+
+df <- create_recommendations("Lion King, The (1994)")
+df <- df[rev(rownames(df)),]
+df$Position <- 1:10
+setDT(df)
+
+rapidapi <- data.frame(matrix(ncol = 3, nrow = 10))
+colnames(rapidapi) <- c("imdbID", "Plot", "Poster")
+movie_list <- c(df$imdbID)
+
+
+for (i in 1:length(movie_list)) {
+  url <- sprintf("https://data-imdb1.p.rapidapi.com/movie/id/%s/",
+                 movie_list[i])
+  
+  response <- VERB("GET", url, add_headers(
+    'rapidapi-host' = 'data-imdb1.p.rapidapi.com', 
+    'rapidapi-key' = 'd29ee17a3dmshacf1dad96b6fa27p150b6cjsn8d3f05896ed6'), 
+    content_type("application/octet-stream"))
+  
+  x <- content(response, "parsed")
+  rapidapi[i, 1] <- movie_list[i]
+  rapidapi[i, 2] <- x$results$plot
+  rapidapi[i, 3] <- x$results$banner
+}
+
+rapidapi
+movie_list
+rapidapi$imdbID
+
+
+# for (i in 1:length(movie_list)) {
+#   url <- sprintf("https://data-imdb1.p.rapidapi.com/movie/id/%s/",
+#                  movie_list[i])
+# 
+#   response <- VERB("GET", url, add_headers(
+#   'rapidapi-host' = 'data-imdb1.p.rapidapi.com',
+#   'rapidapi-key' = 'd29ee17a3dmshacf1dad96b6fa27p150b6cjsn8d3f05896ed6'),
+#   content_type("application/octet-stream"))
+# 
+#   x <- content(response, "parsed")
+#   rapidapi[i, 1] <- movie_list[i]
+#   rapidapi[i, 2] <- x$results$plot
+#   rapidapi[i, 3] <- x$results$banner
+# }
+
+

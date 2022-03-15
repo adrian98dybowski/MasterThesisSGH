@@ -28,14 +28,14 @@ server <- function(input, output, session){
    
    for (i in 1:length(movie_list)) {
      url <- sprintf(
-       "https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/%s", 
+       "https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/%s",
        movie_list[i])
      
      response <- VERB("GET", url, add_headers(
-       'rapidapi-host' = 'imdb-internet-movie-database-unofficial.p.rapidapi.com', 
-       'rapidapi-key' = 'a14d8ff0a5msh03678641c7a531fp124ed5jsnb2337e7b2a4f'), 
+       'rapidapi-host' = 'imdb-internet-movie-database-unofficial.p.rapidapi.com',
+       'rapidapi-key' = 'a14d8ff0a5msh03678641c7a531fp124ed5jsnb2337e7b2a4f'),
        content_type("application/octet-stream"))
-     
+
      x <- content(response, "parsed")
      rapidapi[i, 1] <- x$id
      rapidapi[i, 2] <- x$plot
