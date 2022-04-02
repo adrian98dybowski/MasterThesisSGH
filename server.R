@@ -57,6 +57,7 @@ server <- function(input, output, session){
    
    df[, c("imdbID", "Poster") := NULL]
    df <- subset(df, select = c(Position, Distance, Title, Plot, Info))
+   colnames(df) <- c('Position', 'Distance', 'Title', 'Plot', 'Poster')
    
    # Finalna tabela
    dataInside <- reactive({df})
