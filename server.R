@@ -59,6 +59,8 @@ server <- function(input, output, session){
    df <- subset(df, select = c(Position, Distance, Title, Plot, Info))
    colnames(df) <- c('Position', 'Distance', 'Title', 'Plot', 'Poster')
    
+   updateProgressBar(session = session, id = "progres", value = 80, title = "Download data!!!")
+   
    # Finalna tabela
    dataInside <- reactive({df})
   
@@ -91,7 +93,6 @@ server <- function(input, output, session){
   
   # Koniec paska ładowania danych
   
-  updateProgressBar(session = session, id = "progres", value = 80, title = "Download data!!!")
   updateProgressBar(session = session, id = "progres", value = 100, title = "Done!!!")
   
   # Ukrycie paska ładowania danych

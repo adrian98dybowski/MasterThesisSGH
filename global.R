@@ -11,10 +11,6 @@ library(DT)
 library(reticulate)
 library(httr)
 
-#library(tidyverse)
-#library(scales)
-#library(pryr)
-#library(pander)
 
 # Biblioteki pythonowe, które są potrzebne, aby działał plik .py
 
