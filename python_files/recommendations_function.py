@@ -141,3 +141,4 @@ def create_recommendations(movie_name):
         return results_table
     else:
         return "Lack of recommendations. Please, check your movie title"
+
