@@ -87,13 +87,13 @@ user_votes = ratings.groupby('userID')['rating'].agg('count')
 # In[14]:
 
 
-data = data.loc[movie_votes[movie_votes > 10].index,:]
+data = data.loc[movie_votes[movie_votes >= 10].index,:]
 
 
 # In[15]:
 
 
-data = data.loc[:,user_votes[user_votes > 10].index]
+data = data.loc[:,user_votes[user_votes >= 20].index]
 
 
 # In[16]:
@@ -112,7 +112,7 @@ csr_data
 # In[18]:
 
 
-knn = NearestNeighbors(metric = 'cosine', algorithm = 'auto', n_neighbors = 11, n_jobs = -1)
+knn = NearestNeighbors(n_neighbors=11, metric='cosine', algorithm='auto', n_jobs=-1)
 
 
 # In[19]:
