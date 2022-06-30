@@ -1,4 +1,4 @@
-TABS <<- tabPanel("Ranking", 
+TABS <<- tabPanel("Recommender", 
                   div(class = 'filter-box', 
 
                       div(class = "filter_divs", 
@@ -16,7 +16,5 @@ TABS <<- tabPanel("Ranking",
                                      range_value = NULL, unit_mark = "%", 
                                      display_pct = TRUE)),
                   
-                  bsModal("modal_plot", "Details", trigger = NULL, size = "large"),
-                  
-                  DTOutput("table")
-) 
+                  DTOutput("tableMain")
+)
