@@ -46,13 +46,13 @@ data <- t(as.matrix(data, byrow = TRUE))
 # Obliczenie metryki cosinusowej. Jesli plik już istnieje w projekcie to zaczytywany jest 
 # ten plik. Ograniczenie czasu wczytywania danych.
 
-if (file.exists("cosine_metrics.rds") == TRUE) {
-  cosine_metrics <- readRDS("cosine_metrics.rds")
+if (file.exists("data/cosine_metrics.rds") == TRUE) {
+  cosine_metrics <- readRDS("data/cosine_metrics.rds")
   print("Plik z metrykami istnieje w projekcie i został zaczytany")
 } else {
   cosine_metrics <- cosine(data)
-  saveRDS(cosine_metrics, "cosine_metrics.rds")
-  cosine_metrics <- readRDS("cosine_metrics.rds")
+  saveRDS(cosine_metrics, "data/cosine_metrics.rds")
+  cosine_metrics <- readRDS("data/cosine_metrics.rds")
   print("Metryki musiały zostać policzone")
 }
 
@@ -75,7 +75,7 @@ create_recommendations <- function(movie_name) {
   neighbors_vector <- neighbors$movieID
   setDT(movies)
   # Wzięcie podstawowych informacji o 10 najbliższych sąsiadach wybranego filmu
-  table <- movies[movieID %in% neighbors_vector]
+  table <- movies_info[movieID %in% neighbors_vector]
   setDT(table)
   selected_movie_metrics$movieID <- as.character(selected_movie_metrics$movieID)
   table$movieID <- as.character(table$movieID)
@@ -84,9 +84,9 @@ create_recommendations <- function(movie_name) {
   # Obliczenie odległości między filmami
   table[, distance := 1-metrics]
   # Drobne korekty kolumn
-  table[, c("movieID", "genres", "metrics") := NULL]
-  table <- subset(table, select = c(imdbID, title, distance))
-  colnames(table) <- c("imdbID", "Title", "Distance")
+  table[, c("movieID", "Genres", "metrics") := NULL]
+  table <- subset(table, select = c(imdbID, distance, Title, Plot, Poster))
+  colnames(table) <- c("imdbID", "Distance", "Title", "Plot", "Poster")
   # Zwrócenie przygotowanej tabeli
   return(table)
 }
