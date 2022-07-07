@@ -106,3 +106,98 @@ if (file.exists("data/movies_info.csv") == TRUE) {
   fwrite(movies_info, "data/movies_info.csv")
   movies_info <- fread("data/movies_info.csv")
 }
+
+
+# Analiza eksploracyjna danych
+
+# Zliczenie ocen dla każdego filmu, ocen każdego użytkownika i częstości każdej oceny w zbiorze
+
+movie_votes <- ratings[, .(counts = .N), .(movieID)]
+user_votes <- ratings[, .(counts = .N), .(userID)]
+
+ratings_counts <- ratings[, .(counts = .N), .(rating)]
+setorder(ratings_counts, rating)
+ratings_counts[, sum := sum(counts)]
+ratings_counts[, proportion := counts/sum]
+
+# Sprawdzenie ile razy dany gatunek został przypisany do filmu
+
+genres <- movies$genres
+genres <- gsub('\\|', ' ', genres)
+corpus <- Corpus(VectorSource(genres))
+results <- term_stats(corpus, ngrams = 1)
+results <- head(results, 19)
+
+# Wykres kołowy z częstościami każdej unikalnej oceny
+
+pie_chart <- ggplot(ratings_counts, aes(x = "", y = proportion, fill = as.character(rating)))+
+  geom_bar(stat="identity", width=1, color="white") +
+  coord_polar("y", start=0) +
+  theme_void() +
+  scale_fill_brewer(palette="Set3") +
+  labs(fill = "Rating")
+
+# Histogramy dotyczące ile ocen mają filmy
+
+histogram_movie_votes_1 <- ggplot(movie_votes, aes(x = counts)) +
+                           geom_histogram(fill = "blue", colour = "black", bins = 5) +
+                           xlab("Numbers of ratings") +
+                           ylab("Numbers of movies")+
+                           theme_classic()
+
+histogram_movie_votes_2 <- ggplot(movie_votes[counts < 50], aes(x = counts)) +
+                           geom_histogram(fill = "red", colour = "black", bins = 5) +
+                           xlab("Numbers of ratings") +
+                           ylab("Numbers of movies")+
+                           theme_classic()
+
+histogram_movie_votes_3 <- ggplot(movie_votes[counts < 10], aes(x = counts)) +
+                           geom_histogram(fill = "green", colour = "black", bins = 9) +
+                           xlab("Numbers of ratings") +
+                           ylab("Numbers of movies")+
+                           theme_classic()
+
+# Histogramy dotyczące ile ocen filmów ma każdy użytkownik
+
+histogram_user_votes_1 <- ggplot(user_votes, aes(x = counts)) +
+                          geom_histogram(fill = "blue", colour = "black", bins = 5) +
+                          xlab("Numbers of ratings") +
+                          ylab("Numbers of users")+
+                          theme_classic()
+
+histogram_user_votes_2 <- ggplot(user_votes[counts < 500], aes(x = counts)) +
+                          geom_histogram(fill = "red", colour = "black", bins = 5) +
+                          xlab("Numbers of ratings") +
+                          ylab("Numbers of users")+
+                          theme_classic()
+
+histogram_user_votes_3 <- ggplot(user_votes[counts < 100], aes(x = counts)) +
+                          geom_histogram(fill = "green", colour = "black", bins = 9) +
+                          xlab("Numbers of ratings") +
+                          ylab("Numbers of users")+
+                          theme_classic()
+
+# Wykres słupkowy dla gatunków filmów
+
+bar_genres <- ggplot(results, aes(x = reorder(term, - count), y = count)) +
+              geom_bar(stat="identity", fill = "blue")+
+              xlab("Genre") +
+              ylab("Numbers of occurence in movies")+
+              theme_classic() +
+              theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+# Wykresy punktowe obrazujące oceny filmów i oceny użytowników
+
+scatterplot_movies <- ggplot(movie_votes, aes(x = movieID, y = counts)) +
+                      geom_point(colour = "green")+
+                      xlab("Movie ID") +
+                      ylab("Number of users votes on the movie")+
+                      theme_classic() +
+                      geom_hline(yintercept = 20, colour = "red")
+
+scatterplot_users <- ggplot(user_votes, aes(x = userID, y = counts)) +
+                     geom_point(colour = "orange")+
+                     xlab("User ID") +
+                     ylab("Number of user votes")+
+                     theme_classic() +
+                     geom_hline(yintercept = 20, colour = "blue")

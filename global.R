@@ -16,21 +16,9 @@ library(httr)
 library(stringr)
 library(tm)
 library(corpus)
-
-
-# Biblioteki pythonowe, które są potrzebne, aby działał plik .py
-
-# py_install("sklearn", pip = TRUE)
-# py_install("matplotlib")
-# py_install("scipy")
-# py_install("numpy")
-# py_install("pandas")
-# py_install("seaborn")
-
+library(ggplot2)
 
 # Wczytanie potrzebnych funkcji
-
-#source_python('python_files/recommendations_function.py')
 source("model.R")
 
 # Wczytanie finalnego pliku z danymi filmowymi

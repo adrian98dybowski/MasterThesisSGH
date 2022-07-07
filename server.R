@@ -178,7 +178,7 @@ server <- function(input, output, session){
     # Początek paska ładowania danych
     
     runjs(code = "$('.progress-group').removeClass('shinyjs-hide')")
-    updateProgressBar(session = session, id = "progres2", value = 20, title = "Start")
+    updateProgressBar(session = session, id = "progres3", value = 20, title = "Start")
     
     # Dane do zakładki trzeciej - filtrowanie na podstawie wybranego rodzaju filmu
     
@@ -189,7 +189,7 @@ server <- function(input, output, session){
     genres_table <- genres_table[is.na(Rating) == FALSE]
     setorder(genres_table, -Rating)
     
-    updateProgressBar(session = session, id = "progres", value = 80, title = "Download data!!!")
+    updateProgressBar(session = session, id = "progres3", value = 80, title = "Download data!!!")
     
     # Finalna tabela
     
@@ -220,7 +220,7 @@ server <- function(input, output, session){
     
     # Koniec paska ładowania danych
     
-    updateProgressBar(session = session, id = "progres", value = 100, title = "Done!!!")
+    updateProgressBar(session = session, id = "progres3", value = 100, title = "Done!!!")
     
     # Ukrycie paska ładowania danych
     
