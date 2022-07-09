@@ -188,6 +188,7 @@ server <- function(input, output, session){
     genres_table <- subset(df3, select = c("Title", "Rating", "Poster"))
     genres_table <- genres_table[is.na(Rating) == FALSE]
     setorder(genres_table, -Rating)
+    genres_table <- head(genres_table, 100)
     
     updateProgressBar(session = session, id = "progres3", value = 80, title = "Download data!!!")
     

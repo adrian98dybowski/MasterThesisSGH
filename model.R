@@ -93,3 +93,7 @@ create_recommendations <- function(movie_name) {
 
 #create_recommendations("Shawshank Redemption, The (1994)")
 
+
+create_recommendations("Lion King, The (1994)")
+
+

@@ -110,6 +110,9 @@ if (file.exists("data/movies_info.csv") == TRUE) {
 
 # Analiza eksploracyjna danych
 
+# summary(rapidapi)
+# summary(movies_info)
+
 # Zliczenie ocen dla każdego filmu, ocen każdego użytkownika i częstości każdej oceny w zbiorze
 
 movie_votes <- ratings[, .(counts = .N), .(movieID)]
